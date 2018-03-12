@@ -6,35 +6,11 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:34:58 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/11 16:36:52 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/12 10:47:04 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	ft_extract_room_names(t_lem_in *l)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (l->rooms[i])
-	{
-		j = 0;
-		while (l->rooms[i][j] != ' ')
-			j++;
-		l->rooms[i][j] = '\0';
-		i++;
-	}
-	i = 0;
-	while (l->start[i] != ' ')
-		i++;
-	l->start[i] = '\0';
-	i = 0;
-	while (l->end[i] != ' ')
-		i++;
-	l->end[i] = '\0';
-}
 
 int		ft_parsing(char **map, t_lem_in *l)
 {
@@ -44,7 +20,7 @@ int		ft_parsing(char **map, t_lem_in *l)
 		return (-1);
 	if (!l->start || !l->end || !ft_tablen(l->rooms) || !ft_tablen(l->links))
 		return (-1);
-	ft_extract_room_names(l);
+	ft_remove_coordinates(l);
 	if (ft_check_identical_rooms(l) == -1)
 		return (-1);
 	if (ft_check_first_link(l) == -1)
@@ -86,7 +62,25 @@ int		ft_init_struct(t_lem_in *l, char **map)
 	return (0);
 }
 
-char	**ft_save_map(void)
+char	**ft_save_map(char *file)
+{
+	char **map;
+
+	if (file && ft_check_empty_lines(file) == -1)
+	{
+		free(file);
+		return (NULL);
+	}
+	else if (file)
+	{
+		map = ft_strsplit(file, '\n');
+		free(file);
+		return (map);
+	}
+	return (NULL);
+}
+
+char	**ft_read_map(void)
 {
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
@@ -100,19 +94,13 @@ char	**ft_save_map(void)
 		file[1] = file[0];
 		file[0] = ft_strjoin(file[1], buf);
 		free(file[1]);
+		if (file[0][0] != '#' && !ft_isdigit(file[0][0]))
+		{
+			free(file[0]);
+			return (NULL);
+		}
 	}
-	if (file[0] && ft_check_empty_lines(file[0]) == -1)
-	{
-		free(file[0]);
-		return (NULL);
-	}
-	else if (file[0])
-	{
-		map = ft_strsplit(file[0], '\n');
-		free(file[0]);
-		return (map);
-	}
-	return (NULL);
+	return (ft_save_map(file[0]));
 }
 
 int		main(int ac, char **av)
@@ -125,7 +113,7 @@ int		main(int ac, char **av)
 		ft_dprintf(2, "usage: %s < map\n", av[0]);
 		return (-1);
 	}
-	if ((map = ft_save_map()) == NULL)
+	if ((map = ft_read_map()) == NULL)
 	{
 		ft_dprintf(2, "ERROR\n");
 		return (-1);
