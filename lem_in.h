@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:32:55 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/09 11:53:30 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/12 10:51:15 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int					ft_count_rooms(char **map);
 int					ft_count_links(char **map);
 int					ft_count_spaces(char *line);
 int					ft_check_coordinates(t_lem_in *l);
-
+void				ft_remove_coordinates(t_lem_in *l);
 int					ft_check_identical_rooms(t_lem_in *l);
 int					ft_check_first_link(t_lem_in *l);
 int					ft_check_second_link(t_lem_in *l);

@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/14 07:55:11 by fpetras           #+#    #+#              #
-#    Updated: 2018/03/11 16:37:09 by fpetras          ###   ########.fr        #
+#    Updated: 2018/03/12 11:03:33 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC = main.c \
 	  validation2.c \
 	  data_processing.c \
 	  utilities.c \
-	  free.c \
+	  utilities2.c \
+	  free.c
 
 OBJ = $(SRC:.c=.o)
 
