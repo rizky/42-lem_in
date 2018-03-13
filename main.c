@@ -6,13 +6,13 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:34:58 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/12 10:47:04 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/13 10:07:29 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_parsing(char **map, t_lem_in *l)
+static int	ft_parsing(char **map, t_lem_in *l)
 {
 	if (ft_get_data(map, l) == -1)
 		return (-1);
@@ -41,7 +41,7 @@ int		ft_parsing(char **map, t_lem_in *l)
 	return (0);
 }
 
-int		ft_init_struct(t_lem_in *l, char **map)
+static int	ft_init_struct(t_lem_in *l, char **map)
 {
 	l->i = 0;
 	l->j = 0;
@@ -62,7 +62,7 @@ int		ft_init_struct(t_lem_in *l, char **map)
 	return (0);
 }
 
-char	**ft_save_map(char *file)
+static char	**ft_save_map(char *file)
 {
 	char **map;
 
@@ -80,7 +80,7 @@ char	**ft_save_map(char *file)
 	return (NULL);
 }
 
-char	**ft_read_map(void)
+static char	**ft_read_map(void)
 {
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
@@ -103,7 +103,7 @@ char	**ft_read_map(void)
 	return (ft_save_map(file[0]));
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	char		**map;
 	t_lem_in	l;

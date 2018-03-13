@@ -6,13 +6,13 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 10:21:42 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/08 15:26:28 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/13 11:04:15 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_get_room_or_link(char *elem, t_lem_in *l, int i)
+static int	ft_get_room_or_link(char *elem, t_lem_in *l, int i)
 {
 	if (i == ROOM)
 	{
@@ -27,7 +27,7 @@ int		ft_get_room_or_link(char *elem, t_lem_in *l, int i)
 	return (0);
 }
 
-int		ft_get_start_or_end(char **map, t_lem_in *l, int i)
+static int	ft_get_start_or_end(char **map, t_lem_in *l, int i)
 {
 	if (i == START)
 	{
@@ -50,7 +50,7 @@ int		ft_get_start_or_end(char **map, t_lem_in *l, int i)
 	return (0);
 }
 
-int		ft_get_ant_nb(char **map, t_lem_in *l)
+static int	ft_get_ant_nb(char **map, t_lem_in *l)
 {
 	int i;
 	int nb_ants;
@@ -64,7 +64,7 @@ int		ft_get_ant_nb(char **map, t_lem_in *l)
 			;
 		else
 		{
-			if (map[i][0] == '-' || (nb_ants = ft_atoi(map[i])) <= 0)
+			if (!(nb_ants = ft_valid_ants(map[i])))
 				return (-1);
 			break ;
 		}
@@ -79,7 +79,7 @@ int		ft_get_ant_nb(char **map, t_lem_in *l)
 		return (-1);
 }
 
-int		ft_get_data(char **map, t_lem_in *l)
+int			ft_get_data(char **map, t_lem_in *l)
 {
 	int ret;
 
@@ -97,10 +97,10 @@ int		ft_get_data(char **map, t_lem_in *l)
 		if (map[l->i][0] != '#' && ft_count_spaces(map[l->i]) == 2)
 			ft_get_room_or_link(map[l->i], l, ROOM);
 		if (map[l->i][0] != '#' && ft_count_spaces(map[l->i]) == 0 &&
-									ft_strchr(map[l->i], '-'))
+			ft_strchr(map[l->i], '-'))
 			ft_get_room_or_link(map[l->i], l, LINK);
-		if (map[l->i][0] != '#' && ft_count_spaces(map[l->i]) != 2 &&
-									!ft_strchr(map[l->i], '-'))
+		if ((map[l->i][0] != '#' && ft_count_spaces(map[l->i]) != 2 &&
+			!ft_strchr(map[l->i], '-')) || map[l->i][0] == 'L')
 			ret = -1;
 		l->i++;
 	}

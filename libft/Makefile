@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 08:34:49 by fpetras           #+#    #+#              #
-#    Updated: 2017/12/19 12:08:35 by fpetras          ###   ########.fr        #
+#    Updated: 2018/03/11 08:56:40 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,8 @@ LIBFT_SRC =			ft_memset.c \
 					ft_itoa_base.c \
 					ft_strlcpy.c \
 					ft_strcspn.c \
+					ft_atol.c \
+					ft_atoll.c
 
 GET_NEXT_LINE_SRC =	get_next_line/get_next_line.c
 
@@ -148,7 +150,6 @@ FLAGS =				-Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	@echo "..."
 	@$(CC) -c $(FLAGS) $(SRC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
