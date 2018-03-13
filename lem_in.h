@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:32:55 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/13 10:39:48 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/13 11:44:42 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int					ft_islink(char *line);
 size_t				ft_tablen(char **tab);
 void				ft_print_tab(char **tab);
 void				ft_free_tab(char **tab);
+void				ft_free_int_tab(int **tab, int size);
 void				ft_free_struct(t_lem_in *l);
 
 #endif

@@ -6,11 +6,84 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:34:58 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/13 10:07:29 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/13 11:59:41 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void		ft_print_table(int **tab, t_lem_in *l)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < l->nb_rooms)
+	{
+		j = 0;
+		while (j < l->nb_rooms)
+		{
+			ft_printf("%d ", tab[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
+}
+
+int			ft_connections(int i, int j, t_lem_in *l)
+{
+	int k;
+
+	k = 0;
+	while (l->links[k])
+	{
+		if (ft_strstr(l->links[k], l->rooms[i]) &&
+			ft_strstr(l->links[k], l->rooms[j]))
+			return (1);
+		k++;
+	}
+	return (0);
+}
+
+int			**ft_init_table(t_lem_in *l)
+{
+	int i;
+	int j;
+	int **connections;
+
+	i = -1;
+	if (!(connections = (int**)malloc(sizeof(int*) * l->nb_rooms + 1)))
+		return (NULL);
+	while (++i < l->nb_rooms)
+	{
+		j = -1;
+		if (!(connections[i] = (int*)malloc(sizeof(int) * l->nb_rooms + 1)))
+		{
+			free(connections);
+			return (NULL);
+		}
+		while (++j < l->nb_rooms)
+		{
+			if (i == j)
+				connections[i][j] = 0;
+			else
+				connections[i][j] = ft_connections(i, j, l);
+		}
+	}
+	return (connections);
+}
+
+int			ft_pathfinding(t_lem_in *l)
+{
+	int **connections;
+
+	if (!(connections = ft_init_table(l)))
+		return (-1);
+	ft_print_table(connections, l);
+	ft_free_int_tab(connections, l->nb_rooms);
+	return (0);
+}
 
 static int	ft_parsing(char **map, t_lem_in *l)
 {
@@ -38,6 +111,8 @@ static int	ft_parsing(char **map, t_lem_in *l)
 	i = -1;
 	while (l->links[++i])
 		ft_printf("links:   %s\n", l->links[i]);
+	if (ft_pathfinding(l) == -1)
+		return (-1);
 	return (0);
 }
 
@@ -94,7 +169,7 @@ static char	**ft_read_map(void)
 		file[1] = file[0];
 		file[0] = ft_strjoin(file[1], buf);
 		free(file[1]);
-		if (file[0][0] != '#' && !ft_isdigit(file[0][0]))
+		if (file[0][0] != '#' && file[0][0] != '+' && !ft_isdigit(file[0][0]))
 		{
 			free(file[0]);
 			return (NULL);
