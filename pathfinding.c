@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 08:35:09 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/14 08:46:42 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/14 18:06:53 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,42 @@ void		ft_print_table(int **tab, t_lem_in *l)
 		j = 0;
 		while (j < l->nb_rooms)
 		{
-			ft_printf("%d ", tab[i][j]);
+			ft_printf("%d", tab[i][j]);
+			if (tab[i][j] < 10)
+				ft_printf("  ");
+			else
+				ft_printf(" ");
 			j++;
 		}
 		ft_printf("\n");
+		i++;
+	}
+}
+
+void		ft_distance(int **connections, t_lem_in *l)
+{
+	int i;
+	int j;
+	int col;
+	int size;
+
+	i = 0;
+	size = l->nb_rooms;
+	while (i < 1)
+	{
+		j = 0;
+		while (j < size)
+		{
+			col = 0;
+			if (connections[i][j] == 1)
+				while (col < size)
+				{
+					if (connections[j][col] + 1 < connections[i][col])
+						connections[i][col] = connections[j][col];
+					col++;
+				}
+			j++;
+		}
 		i++;
 	}
 }
@@ -59,7 +91,7 @@ int			ft_connections(int i, int j, t_lem_in *l)
 			return (1);
 		k++;
 	}
-	return (0);
+	return (l->nb_rooms + 1);
 }
 
 int			**ft_init_table(t_lem_in *l)
@@ -125,6 +157,7 @@ int			ft_pathfinding(t_lem_in *l)
 		ft_free_int_tab(connections, l->nb_rooms);
 		return (-1);
 	}
+	//ft_distance(connections, l);
 	ft_print_table(connections, l);
 	ft_print_nodes(rooms, l);
 	ft_free_int_tab(connections, l->nb_rooms);
