@@ -6,18 +6,21 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/14 07:55:11 by fpetras           #+#    #+#              #
-#    Updated: 2018/03/12 11:03:33 by fpetras          ###   ########.fr        #
+#    Updated: 2018/03/14 09:02:24 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem-in
 
 SRC = main.c \
+	  parsing.c \
+	  pathfinding.c \
+	  data_processing.c \
 	  validation.c \
 	  validation2.c \
-	  data_processing.c \
 	  utilities.c \
 	  utilities2.c \
+	  utilities3.c \
 	  free.c
 
 OBJ = $(SRC:.c=.o)

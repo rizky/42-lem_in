@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 14:44:18 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/13 11:46:52 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/14 07:31:07 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ void	ft_free_struct(t_lem_in *l)
 	}
 	if (l->links)
 		free(l->links);
+}
+
+void	ft_free_nodes(t_node *rooms, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		free(rooms[i].name);
+		i++;
+	}
+	free(rooms);
 }
 
 void	ft_free_int_tab(int **tab, int size)
