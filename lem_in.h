@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:32:55 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/14 09:02:20 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/15 17:28:04 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define END	2
 # define ROOM	1
 # define LINK	2
+
+int					g_option_v;
 
 typedef struct		s_lem_in
 {

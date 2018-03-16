@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 08:35:09 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/14 20:22:25 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/16 07:54:39 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,6 @@ int			**ft_init_table(t_lem_in *l)
 t_node		*ft_init_rooms(t_lem_in *l)
 {
 	int		i;
-	int		j;
-	char	**coords;
 	t_node	*rooms;
 
 	i = 0;
@@ -135,7 +133,6 @@ t_node		*ft_init_rooms(t_lem_in *l)
 		return (NULL);
 	while (i < l->nb_rooms)
 	{
-		j = 1;
 		rooms[i].index = i;
 		rooms[i].name = ft_strdup(l->rooms[i]);
 		ft_add_coordinates(l->rooms[i]);
@@ -148,14 +145,14 @@ t_node		*ft_init_rooms(t_lem_in *l)
 
 int			ft_pathfinding(t_lem_in *l)
 {
-	int		**connections;
 	t_node	*rooms;
+	int		**connections;
 
-	if (!(connections = ft_init_table(l)))
-		return (-1);
 	if (!(rooms = ft_init_rooms(l)))
+		return (-1);
+	if (!(connections = ft_init_table(l)))
 	{
-		ft_free_int_tab(connections, l->nb_rooms);
+		ft_free_nodes(rooms, l->nb_rooms);
 		return (-1);
 	}
 	ft_distance(connections, l->nb_rooms);

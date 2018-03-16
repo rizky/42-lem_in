@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:34:58 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/14 08:40:12 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/16 07:43:38 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static char	**ft_read_map(void)
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
 	char	*file[2];
-	char	**map;
 
 	file[0] = ft_strnew(0);
 	while ((ret = read(0, &buf, BUFF_SIZE)) > 0)
@@ -74,16 +73,27 @@ static char	**ft_read_map(void)
 	return (ft_save_map(file[0]));
 }
 
+static int	ft_option(int ac, char **av)
+{
+	if (ac == 2 && ft_strequ(av[1], "-v"))
+		g_option_v = 1;
+	else
+	{
+		ft_dprintf(2, "usage: %s [-v] < map\n", av[0]);
+		return (-1);
+	}
+	return (0);
+}
+
 int			main(int ac, char **av)
 {
 	char		**map;
 	t_lem_in	l;
 
+	g_option_v = 0;
 	if (ac > 1)
-	{
-		ft_dprintf(2, "usage: %s < map\n", av[0]);
-		return (-1);
-	}
+		if (ft_option(ac, av) == -1)
+			return (-1);
 	if ((map = ft_read_map()) == NULL)
 	{
 		ft_dprintf(2, "ERROR\n");
@@ -97,8 +107,8 @@ int			main(int ac, char **av)
 	}
 	if (ft_parsing(map, &l) == -1 || ft_pathfinding(&l) == -1)
 		ft_dprintf(2, "ERROR\n");
-//	else
-//		ft_print_tab(map);
+	else
+		ft_print_tab(map);
 	ft_free_tab(map);
 	ft_free_struct(&l);
 	return (0);
