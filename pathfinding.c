@@ -6,13 +6,13 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 08:35:09 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/16 07:54:39 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/16 09:58:42 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		ft_print_nodes(t_node *rooms, t_lem_in *l)
+static void		ft_print_nodes(t_node *rooms, t_lem_in *l)
 {
 	int i;
 
@@ -28,7 +28,7 @@ void		ft_print_nodes(t_node *rooms, t_lem_in *l)
 	}
 }
 
-void		ft_print_table(int **tab, t_lem_in *l)
+static void		ft_print_table(int **tab, t_lem_in *l)
 {
 	int i;
 	int j;
@@ -51,7 +51,7 @@ void		ft_print_table(int **tab, t_lem_in *l)
 	}
 }
 
-void		ft_distance(int **routes, int size)
+static void		ft_distance(int **routes, int size)
 {
 	int i;
 	int j;
@@ -80,7 +80,7 @@ void		ft_distance(int **routes, int size)
 	}
 }
 
-int			ft_connections(int i, int j, t_lem_in *l)
+static int		ft_connections(int i, int j, t_lem_in *l)
 {
 	int k;
 
@@ -95,7 +95,7 @@ int			ft_connections(int i, int j, t_lem_in *l)
 	return (l->nb_rooms + 1);
 }
 
-int			**ft_init_table(t_lem_in *l)
+static int		**ft_init_table(t_lem_in *l)
 {
 	int i;
 	int j;
@@ -123,7 +123,7 @@ int			**ft_init_table(t_lem_in *l)
 	return (connections);
 }
 
-t_node		*ft_init_rooms(t_lem_in *l)
+static t_node	*ft_init_rooms(t_lem_in *l)
 {
 	int		i;
 	t_node	*rooms;
@@ -140,13 +140,14 @@ t_node		*ft_init_rooms(t_lem_in *l)
 		rooms[i].row = ft_atoi(&l->rooms[i][ft_2nd_coord_index(l->rooms[i])]);
 		i++;
 	}
+	ft_remove_coordinates(l);
 	return (rooms);
 }
 
-int			ft_pathfinding(t_lem_in *l)
+int				ft_pathfinding(t_lem_in *l)
 {
-	t_node	*rooms;
 	int		**connections;
+	t_node	*rooms;
 
 	if (!(rooms = ft_init_rooms(l)))
 		return (-1);
