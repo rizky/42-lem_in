@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 11:01:00 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/14 08:33:11 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/16 12:44:21 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	ft_remove_coordinates(t_lem_in *l)
 void	ft_add_coordinates(char *room)
 {
 	int i;
-	int j;
 
 	i = 0;
 	while (room[i])

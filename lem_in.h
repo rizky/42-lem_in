@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:32:55 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/15 17:28:04 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/16 12:40:17 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ typedef struct		s_node
 }					t_node;
 
 int					ft_parsing(char **map, t_lem_in *l);
-int					ft_pathfinding(t_lem_in *l);
-
 int					ft_get_data(char **map, t_lem_in *l);
 
 int					ft_check_empty_lines(char *file);
@@ -62,6 +60,11 @@ int					ft_check_first_link(t_lem_in *l);
 int					ft_check_second_link(t_lem_in *l);
 int					ft_check_second_link2(char *second_link, t_lem_in *l);
 int					ft_check_link_to_same_room(t_lem_in *l);
+
+int					ft_pathfinding(t_lem_in *l);
+
+t_node				*ft_init_nodes(t_lem_in *l);
+int					**ft_init_route(t_lem_in *l);
 
 int					ft_valid_ants(char *line);
 int					ft_isnumber(char *str);

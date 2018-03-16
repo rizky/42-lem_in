@@ -6,7 +6,7 @@
 #    By: fpetras <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/14 07:55:11 by fpetras           #+#    #+#              #
-#    Updated: 2018/03/14 18:08:09 by fpetras          ###   ########.fr        #
+#    Updated: 2018/03/16 12:37:04 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,11 @@ NAME = lem-in
 
 SRC = main.c \
 	  parsing.c \
-	  pathfinding.c \
 	  data_processing.c \
 	  validation.c \
 	  validation2.c \
+	  pathfinding.c \
+	  node_route_manager.c \
 	  utilities.c \
 	  utilities2.c \
 	  utilities3.c \
