@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 09:58:33 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/14 07:37:13 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/16 14:00:03 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ int		ft_parsing(char **map, t_lem_in *l)
 		return (-1);
 	if (ft_check_link_to_same_room(l) == -1)
 		return (-1);
-	ft_printf("nb_ants: %d\n", l->nb_ants);
-	ft_printf("start:   %s\n", l->start);
-	ft_printf("end:     %s\n", l->end);
-	int i = -1;
-	while (l->rooms[++i])
-		ft_printf("rooms:   %s\n", l->rooms[i]);
-	i = -1;
-	while (l->links[++i])
-		ft_printf("links:   %s\n", l->links[i]);
+	ft_print_map_info(l);
 	return (0);
 }

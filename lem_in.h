@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/04 09:32:55 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/16 12:40:17 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/16 14:00:35 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ int					ft_2nd_coord_index(char *room);
 
 size_t				ft_tablen(char **tab);
 void				ft_print_tab(char **tab);
+void				ft_print_int_tab(int **tab, int size);
+void				ft_print_nodes(t_node *rooms, int size);
+void				ft_print_map_info(t_lem_in *l);
 void				ft_free_tab(char **tab);
 void				ft_free_int_tab(int **tab, int size);
 void				ft_free_nodes(t_node *rooms, int size);
