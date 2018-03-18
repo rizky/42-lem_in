@@ -6,7 +6,7 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 10:21:42 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/13 11:04:15 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/18 08:06:42 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	ft_get_room_or_link(char *elem, t_lem_in *l, int i)
 	{
 		l->rooms[l->j] = ft_strdup(elem);
 		l->j++;
+		if (l->k)
+			return (-1);
 	}
 	else if (i == LINK)
 	{
@@ -31,7 +33,7 @@ static int	ft_get_start_or_end(char **map, t_lem_in *l, int i)
 {
 	if (i == START)
 	{
-		while (map[l->i][0] == '#')
+		while (map[l->i][0] == '#' && map[l->i + 1])
 			l->i++;
 		if (l->start)
 			return (-1);
@@ -40,7 +42,7 @@ static int	ft_get_start_or_end(char **map, t_lem_in *l, int i)
 	}
 	else if (i == END)
 	{
-		while (map[l->i][0] == '#')
+		while (map[l->i][0] == '#' && map[l->i + 1])
 			l->i++;
 		if (l->end)
 			return (-1);
@@ -95,7 +97,8 @@ int			ft_get_data(char **map, t_lem_in *l)
 			if (ft_get_start_or_end(map, l, END) == -1)
 				ret = -1;
 		if (map[l->i][0] != '#' && ft_count_spaces(map[l->i]) == 2)
-			ft_get_room_or_link(map[l->i], l, ROOM);
+			if (ft_get_room_or_link(map[l->i], l, ROOM) == -1)
+				ret = -1;
 		if (map[l->i][0] != '#' && ft_count_spaces(map[l->i]) == 0 &&
 			ft_strchr(map[l->i], '-'))
 			ft_get_room_or_link(map[l->i], l, LINK);
