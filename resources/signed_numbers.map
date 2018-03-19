@@ -1,0 +1,18 @@
++42
+#comment
+##start
+#         $
+start -1234 +123
+room-a 0 0
+room-b -0 +0
+room-c +1 -1
+room-d 100 -100
+room-e +1234 -9
+##end
+end 1 +1
+start-room-a
+room-a-room-b
+room-b-room-c
+room-c-room-d
+room-d-room-e
+room-e-end
