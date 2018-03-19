@@ -6,7 +6,7 @@
 /*   By: rnugroho <rnugroho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 03:09:29 by rnugroho          #+#    #+#             */
-/*   Updated: 2018/03/18 10:53:01 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/19 13:46:42 by rnugroho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,24 @@ static t_array	**append_solutions(t_array **sols, int nb_sols, t_array sol)
 
 #define LAST(A) sols[A]->size - 1
 
+static int		turns_counter(t_array **sols, int nb_ants, int n)
+{
+	int		i;
+	int		max;
+
+	if (n == 0)
+		return (0);
+	i = 0;
+	max = 0;
+	while (i < n)
+	{
+		if (max < (int)sols[i]->size)
+			max = sols[i]->size;
+		i++;
+	}
+	return (nb_ants / n + max);
+}
+
 static void		solutions_to_cmds(t_array **sols, t_array *cmds,
 				int nb_ants, int n)
 {
@@ -41,7 +59,7 @@ static void		solutions_to_cmds(t_array **sols, t_array *cmds,
 	char	*temp;
 
 	row = 0;
-	while (row >= 0)
+	while (row < turns_counter(sols, nb_ants, n))
 	{
 		col = -1;
 		offset = 1;
@@ -58,31 +76,8 @@ static void		solutions_to_cmds(t_array **sols, t_array *cmds,
 			free(temp);
 		}
 		fta_append(cmds, "\n", 1);
-		row = (offset + row == (int)LAST((col - 1) % n)) ? -1 : row + 1;
+		row++;
 	}
-}
-
-static int		turns_counter(t_array **sols, int nb_ants, int n)
-{
-	int		col;
-	int		row;
-	int		offset;
-	int		c;
-
-	if (n == 0)
-		return (0);
-	row = 0;
-	c = 0;
-	while (row >= 0)
-	{
-		col = -1;
-		offset = 1;
-		while (++col < nb_ants)
-			offset = (col % n == 0) ? offset - 1 : offset;
-		c++;
-		row = (offset + row == (int)LAST((col - 1) % n)) ? -1 : row + 1;
-	}
-	return (c);
 }
 
 static int		run_pathfinder(int **routetab, t_array ***sols,
