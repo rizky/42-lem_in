@@ -6,7 +6,7 @@
 #    By: rnugroho <rnugroho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/01 20:07:00 by rnugroho          #+#    #+#              #
-#    Updated: 2018/03/18 15:43:37 by rnugroho         ###   ########.fr        #
+#    Updated: 2018/03/20 09:12:19 by fpetras          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,13 @@ LFTDIR:=./libft
 # ==================
 
 # ------------------
-COMPILER:=clang
+COMPILER:=gcc
 SRCPATH:=src/
 HDRPATH:=include/
 CCHPATH:=obj/
 IFLAGS:=-I $(HDRPATH) -I $(LFTDIR)/include
 LFLAGS:=-L $(LFTDIR) -lft
-CFLAGS:=-Wall -Wextra $(IFLAGS)
+CFLAGS:=-Wall -Werror -Wextra $(IFLAGS)
 # ==================
 
 # ----- Colors -----
@@ -103,6 +103,7 @@ test_leaks: $(NAME)
 	valgrind ./lem-in < resources/no-end.map 2>&1 | grep lost
 	valgrind ./lem-in < resources/no-solutions.map 2>&1 | grep lost
 	valgrind ./lem-in < resources/comments.map 2>&1 | grep lost
+	valgrind --leak-check=full ./lem-in -f resources/7.4.map 2>&1 | grep lost
 
 test_algo: $(NAME)
 	./lem-in -vf resources/1.map

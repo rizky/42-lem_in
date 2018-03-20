@@ -6,7 +6,7 @@
 /*   By: rnugroho <rnugroho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 03:09:29 by rnugroho          #+#    #+#             */
-/*   Updated: 2018/03/19 13:46:42 by rnugroho         ###   ########.fr       */
+/*   Updated: 2018/03/20 09:17:06 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,31 @@ static t_array	**append_solutions(t_array **sols, int nb_sols, t_array sol)
 
 static int		turns_counter(t_array **sols, int nb_ants, int n)
 {
-	int		i;
-	int		max;
+	int		col;
+	int		row;
+	int		c;
+	int		off;
+	int		end;
 
 	if (n == 0)
 		return (0);
-	i = 0;
-	max = 0;
-	while (i < n)
+	row = 0;
+	c = -1;
+	while (row != -1)
 	{
-		if (max < (int)sols[i]->size)
-			max = sols[i]->size;
-		i++;
+		col = -1;
+		off = 1;
+		end = 1;
+		while (++col < nb_ants)
+		{
+			off = (col % n == 0) ? off - 1 : off;
+			if ((off + row) >= 0 && ((off + row) <= (int)LAST(col % n)) && end)
+				end = 0;
+		}
+		row = end ? -1 : row + 1;
+		c++;
 	}
-	return (nb_ants / n + max);
+	return (c);
 }
 
 static void		solutions_to_cmds(t_array **sols, t_array *cmds,
@@ -80,27 +91,27 @@ static void		solutions_to_cmds(t_array **sols, t_array *cmds,
 	}
 }
 
-static int		run_pathfinder(int **routetab, t_array ***sols,
-				t_node *rooms, t_lem_in *l)
+static int		run_pathfinder(int **route, t_array ***sols,
+				t_node *r, t_lem_in *l)
 {
 	t_array		sol;
 	int			nb_sols;
-	int			start;
-	int			end;
 	int			turns;
+	int			start;
 
-	start = get_nodes_index(rooms, l, l->start);
-	end = get_nodes_index(rooms, l, l->end);
-	nb_sols = 0;
 	sol = NEW_ARRAY(int);
-	fta_append(&sol, &start, 1);
+	nb_sols = 0;
 	turns = 0;
-	while (pathfinder(&routetab, l->nb_rooms, &sol, end))
+	start = get_nodes_index(r, l, l->start);
+	fta_append(&sol, &start, 1);
+	while (pathfinder(&route, l->nb_rooms, &sol, get_nodes_index(r, l, l->end)))
 	{
 		*sols = append_solutions((*sols), nb_sols++, sol);
-		if (turns_counter((*sols), l->nb_ants, nb_sols) > turns &&
-			turns != 0 && nb_sols-- > 0)
-			break ;
+		if (turns_counter((*sols), l->nb_ants, nb_sols) > turns && turns != 0)
+		{
+			fta_clear((*sols)[--nb_sols]);
+			free((*sols)[nb_sols]);
+		}
 		turns = turns_counter((*sols), l->nb_ants, nb_sols);
 		fta_clear(&sol);
 		sol = NEW_ARRAY(int);
@@ -114,9 +125,9 @@ int				ft_pathfinding(char **map, t_lem_in *l)
 {
 	t_node		*rooms;
 	int			**route;
-	t_array		**sols;
-	t_array		cmds;
 	int			nb_sols;
+	t_array		cmds;
+	t_array		**sols;
 
 	if (!(rooms = ft_init_nodes(l)))
 		return (-1);

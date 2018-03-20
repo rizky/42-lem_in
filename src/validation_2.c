@@ -6,14 +6,14 @@
 /*   By: fpetras <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 11:22:11 by fpetras           #+#    #+#             */
-/*   Updated: 2018/03/16 08:45:19 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/20 09:17:49 by fpetras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** Overly complicated in order to make sure room's names are able to contain '-'
+** Overly complicated in order to make sure rooms' names are able to contain '-'
 */
 
 int		ft_check_link_to_same_room(t_lem_in *l)
