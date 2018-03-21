@@ -6,7 +6,7 @@
 /*   By: rnugroho <rnugroho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 03:09:29 by rnugroho          #+#    #+#             */
-/*   Updated: 2018/03/20 09:17:06 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/21 12:59:22 by rnugroho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@ static t_array	**append_solutions(t_array **sols, int nb_sols, t_array sol)
 {
 	t_array		**temp;
 
-	temp = (t_array**)malloc(sizeof(t_array*) * nb_sols + 1);
+	if ((temp = (t_array**)malloc(sizeof(t_array*) * nb_sols + 1)) == NULL)
+		return (sols);
 	if (nb_sols > 0)
 	{
 		ft_memcpy(temp, sols, sizeof(t_array*) * nb_sols);
 		free(sols);
 	}
 	sols = temp;
-	sols[nb_sols] = (t_array*)malloc(sizeof(t_array));
+	if ((sols[nb_sols] = (t_array*)malloc(sizeof(t_array))) == NULL)
+		return (sols);
 	ft_memcpy(sols[nb_sols], &sol, sizeof(t_array));
-	sols[nb_sols]->data = (int*)malloc(sizeof(int) * sol.size);
+	if ((sols[nb_sols]->data = (int*)malloc(sizeof(int) * sol.size)) == NULL)
+		return (sols);
 	ft_memcpy(sols[nb_sols]->data, sol.data, sizeof(int) * sol.size);
 	return (sols);
 }
@@ -69,8 +72,8 @@ static void		solutions_to_cmds(t_array **sols, t_array *cmds,
 	int		offset;
 	char	*temp;
 
-	row = 0;
-	while (row < turns_counter(sols, nb_ants, n))
+	row = -1;
+	while (++row < turns_counter(sols, nb_ants, n))
 	{
 		col = -1;
 		offset = 1;
@@ -87,8 +90,8 @@ static void		solutions_to_cmds(t_array **sols, t_array *cmds,
 			free(temp);
 		}
 		fta_append(cmds, "\n", 1);
-		row++;
 	}
+	fta_append(cmds, "\0", 1);
 }
 
 static int		run_pathfinder(int **route, t_array ***sols,

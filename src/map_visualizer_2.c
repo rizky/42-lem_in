@@ -6,7 +6,7 @@
 /*   By: rnugroho <rnugroho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 21:14:17 by rnugroho          #+#    #+#             */
-/*   Updated: 2018/03/18 17:46:30 by fpetras          ###   ########.fr       */
+/*   Updated: 2018/03/21 12:59:32 by rnugroho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static t_node	*scale_map(t_node *nodes, int size)
 	t_node	*d_nodes;
 	int		i;
 
-	d_nodes = (t_node*)malloc(sizeof(t_node) * size);
+	if ((d_nodes = (t_node*)malloc(sizeof(t_node) * size)) == NULL)
+		return (nodes);
 	ft_memcpy(d_nodes, nodes, sizeof(t_node) * size);
 	i = 0;
 	while (i < size)
