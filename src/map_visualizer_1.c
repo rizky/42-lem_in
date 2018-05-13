@@ -6,7 +6,7 @@
 /*   By: rnugroho <rnugroho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 18:14:31 by rnugroho          #+#    #+#             */
-/*   Updated: 2018/03/19 16:17:16 by rnugroho         ###   ########.fr       */
+/*   Updated: 2018/05/13 16:08:52 by rnugroho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		run_print_map(int **routetab, t_lem_in *l,
 	i = 0;
 	reset_route(routetab, l->nb_rooms);
 	cmds = ft_strsplit(((char*)a_cmds.data), '\n');
+	ft_printf("\033[H\033[J");
 	while (cmds[++i])
 	{
 		icmds = ft_strsplit(cmds[i], ' ');
@@ -76,10 +77,9 @@ void		run_print_map(int **routetab, t_lem_in *l,
 			j++;
 		}
 		ft_strtab_free(icmds);
-		ft_printf("\033[H\033[J");
 		print_map(nodes, routetab, l);
 		ft_printfln("Turns: %d", i);
-		system("sleep 0.4");
+		system("sleep 0.2");
 	}
 	ft_strtab_free(cmds);
 }
